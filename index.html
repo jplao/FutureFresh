@@ -685,6 +685,18 @@
             <div class="tagline">Youth Breaking Jam</div>
         </div>
 
+        <!-- Manual Refresh Button for Public Users -->
+        <button class="btn btn-secondary" id="manualRefreshBtn" style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            z-index: 999;
+        " onclick="loadData()">
+            🔄 Refresh
+        </button>
+
         <!-- Admin Login Button - Top Left Corner -->
         <button class="btn btn-secondary" id="adminLoginBtn" style="
             position: fixed;
@@ -1086,6 +1098,13 @@
                 showSyncStatus('☁️ Loading data...');
                 const response = await fetch(SHEETDB_API_URL);
                 
+                if (response.status === 429) {
+                    console.warn('Rate limit hit - too many requests');
+                    showSyncStatus('⚠️ Rate limit - waiting...', true);
+                    // Use cached data from localStorage if available
+                    return;
+                }
+                
                 if (!response.ok) throw new Error('Failed to load data');
                 
                 const data = await response.json();
@@ -1221,8 +1240,8 @@
             }
         }
 
-        // Auto-refresh data every 10 seconds
-        setInterval(loadData, 10000);
+        // Auto-refresh data every 3 minutes (avoid rate limits)
+        setInterval(loadData, 180000);
 
         // Tab Navigation
         document.querySelectorAll('.nav-tab').forEach(tab => {
