@@ -834,6 +834,11 @@
                 <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.1em;">Check-In Dancers</h2>
                 
                 <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button class="btn" style="padding: 0.8rem 1.5rem; font-size: 1.1rem;" onclick="loadData()">
+                            🔄 Refresh Data
+                        </button>
+                    </div>
                     <div class="form-group">
                         <label for="searchDancers">Search Dancers</label>
                         <input type="text" id="searchDancers" placeholder="Search by name..." oninput="updateCheckinList()">
@@ -1007,13 +1012,25 @@
                 const data = await response.json();
                 console.log('Raw data from Google Sheets:', data);
                 
-                dancers = data.map(d => ({
-                    ...d,
-                    age: parseInt(d.age),
-                    // SheetDB returns booleans as strings, need to convert
-                    checkedIn: d.checkedIn === 'true' || d.checkedIn === true,
-                    paid: d.paid === 'true' || d.paid === true
-                }));
+                dancers = data.map(d => {
+                    // Helper function to convert various boolean formats
+                    const toBool = (val) => {
+                        if (val === true || val === 'true' || val === 'TRUE' || val === 'True' || val === 1 || val === '1') return true;
+                        return false;
+                    };
+                    
+                    return {
+                        id: d.id,
+                        name: d.name,
+                        age: parseInt(d.age),
+                        ageBracket: d.ageBracket,
+                        email: d.email || '',
+                        type: d.type,
+                        checkedIn: toBool(d.checkedIn),
+                        paid: toBool(d.paid),
+                        registrationTime: d.registrationTime
+                    };
+                });
                 
                 console.log('Processed dancers:', dancers);
                 
@@ -1024,6 +1041,7 @@
                 }
                 
                 updateAllViews();
+                console.log('All views updated');
                 showSyncStatus('✅ Data loaded!');
             } catch (error) {
                 console.error('Load error:', error);
@@ -1222,6 +1240,7 @@
         async function updateDancer(id, updates) {
             try {
                 showSyncStatus('☁️ Updating...');
+                console.log('Update requested - ID:', id, 'Updates:', updates);
                 
                 // Find the dancer in our local data
                 const dancer = dancers.find(d => d.id === id);
@@ -1229,8 +1248,24 @@
                     throw new Error('Dancer not found');
                 }
                 
-                // Create updated dancer object
-                const updatedDancer = { ...dancer, ...updates };
+                console.log('Original dancer data:', dancer);
+                
+                // Create updated dancer object - preserve ALL fields
+                const updatedDancer = {
+                    id: dancer.id,
+                    name: dancer.name,
+                    age: dancer.age,
+                    ageBracket: dancer.ageBracket,
+                    email: dancer.email || '',
+                    type: dancer.type,
+                    checkedIn: dancer.checkedIn,
+                    paid: dancer.paid,
+                    registrationTime: dancer.registrationTime,
+                    // Apply updates
+                    ...updates
+                };
+                
+                console.log('Updated dancer data:', updatedDancer);
                 
                 // Delete the old row
                 const deleteResponse = await fetch(`${SHEETDB_API_URL}/id/${id}`, {
@@ -1241,6 +1276,8 @@
                     console.error('Delete failed:', await deleteResponse.text());
                     throw new Error('Delete failed');
                 }
+                
+                console.log('Deleted old row');
                 
                 // Add the updated row
                 const addResponse = await fetch(SHEETDB_API_URL, {
@@ -1257,8 +1294,11 @@
                     throw new Error('Add failed');
                 }
                 
+                console.log('Added updated row');
+                
                 // Wait a moment for Google Sheets to process, then reload
-                await new Promise(resolve => setTimeout(resolve, 500));
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Increased to 1 second
+                console.log('Reloading data...');
                 await loadData();
                 showSyncStatus('✅ Updated successfully!');
             } catch (error) {
