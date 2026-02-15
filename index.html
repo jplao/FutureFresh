@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Fresh - Youth Breaking Jam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --electric-blue: #00d9ff;
+            --flame-orange: #ff6b00;
+            --gold: #ffd700;
+            --neon-green: #39ff14;
+            --deep-purple: #1a0033;
+            --brick-red: #8b1e1e;
+            --shadow: rgba(0, 0, 0, 0.8);
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #0f001f 100%);
+            color: white;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 107, 0, 0.03) 2px, rgba(255, 107, 0, 0.03) 4px),
+                radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grain {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="3" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+            opacity: 0.4;
+            pointer-events: none;
+            animation: grain 8s steps(10) infinite;
+            z-index: 1;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(-10%, 5%); }
+            30% { transform: translate(5%, -10%); }
+            40% { transform: translate(-5%, 15%); }
+            50% { transform: translate(-10%, 5%); }
+            60% { transform: translate(15%, 0); }
+            70% { transform: translate(0, 10%); }
+            80% { transform: translate(-15%, 0); }
+            90% { transform: translate(10%, 5%); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 5rem;
+            background: linear-gradient(45deg, var(--gold), var(--flame-orange), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+            letter-spacing: 0.1em;
+            transform: rotate(-2deg);
+            margin-bottom: 1rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: rotate(-2deg) scale(1); }
+            50% { transform: rotate(-2deg) scale(1.05); }
+        }
+
+        .tagline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--electric-blue);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .admin-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .admin-badge.show {
+            display: block;
+        }
+
+        .logout-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            margin-left: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(0, 217, 255, 0.2));
+            border: 3px solid var(--electric-blue);
+            color: white;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--flame-orange), var(--electric-blue));
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .nav-tab.admin-only {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 0, 0.2));
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .event-info {
+            background: linear-gradient(135deg, rgba(139, 30, 30, 0.3), rgba(26, 0, 51, 0.3));
+            border: 2px solid var(--flame-orange);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 50px var(--shadow);
+            position: relative;
+        }
+
+        .event-info::before {
+            content: '🔥';
+            position: absolute;
+            top: -20px;
+            right: 30px;
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .info-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--electric-blue);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 0, 0.1));
+            border: 2px solid var(--electric-blue);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--electric-blue);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--flame-orange), var(--gold));
+            border: 3px solid var(--gold);
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--electric-blue), var(--deep-purple));
+            border-color: var(--electric-blue);
+        }
+
+        .dancers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dancer-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(26, 0, 51, 0.4));
+            border: 2px solid var(--electric-blue);
+            border-radius: 15px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .dancer-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .dancer-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .dancer-info {
+            font-size: 0.95rem;
+            color: var(--electric-blue);
+            margin: 0.3rem 0;
+        }
+
+        .checked-in {
+            display: inline-block;
+            background: var(--neon-green);
+            color: black;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .not-checked-in {
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.3);
+            color: var(--flame-orange);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .bracket-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+
+        .round-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .matchups {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .matchup {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(0, 217, 255, 0.2));
+            border: 2px solid var(--electric-blue);
+            border-radius: 10px;
+            padding: 1rem;
+            min-width: 300px;
+        }
+
+        .matchup-header {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .competitor {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 3px solid var(--electric-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .competitor.winner {
+            border-left-color: var(--gold);
+            background: rgba(255, 215, 0, 0.2);
+            font-weight: 700;
+        }
+
+        .select-winner {
+            background: var(--flame-orange);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .select-winner:hover {
+            background: var(--gold);
+            color: black;
+        }
+
+        .champion-banner {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .champion-banner::before {
+            content: '🏆';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .champion-banner h2 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .champion-banner p {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .age-bracket-selector {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+
+        .bracket-btn {
+            font-family: 'Bebas Neue', sans-serif;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 217, 255, 0.2);
+            border: 2px solid var(--electric-blue);
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .bracket-btn.active {
+            background: var(--gold);
+            color: black;
+            border-color: var(--gold);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(0, 0, 0, 0.4));
+            border: 2px solid var(--flame-orange);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--electric-blue);
+            margin-top: 0.5rem;
+        }
+
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .login-modal.show {
+            display: flex;
+        }
+
+        .login-box {
+            background: linear-gradient(135deg, rgba(26, 0, 51, 0.95), rgba(10, 0, 21, 0.95));
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+        }
+
+        .login-box h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .sync-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--electric-blue);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            z-index: 1000;
+            display: none;
+        }
+
+        .sync-status.show {
+            display: block;
+        }
+
+        .sync-status.error {
+            border-color: var(--flame-orange);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dancers-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <!-- Admin Badge -->
+    <div class="admin-badge" id="adminBadge">
+        👑 Admin Mode
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Sync Status -->
+    <div class="sync-status" id="syncStatus"></div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" required placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="closeLoginModal()">
+                    Continue as Viewer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">FUTURE FRESH</div>
+            <div class="tagline">Youth Breaking Jam</div>
+        </div>
+
+        <!-- Admin Login Button - Top Left Corner -->
+        <button class="btn btn-secondary" id="adminLoginBtn" style="
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            z-index: 1000;
+            display: none;
+        " onclick="document.getElementById('loginModal').classList.add('show')">
+            🔐 Admin
+        </button>
+
+        <script>
+            // Show/hide admin login button based on login state
+            function updateLoginButton() {
+                const loginBtn = document.getElementById('adminLoginBtn');
+                if (loginBtn) {
+                    loginBtn.style.display = sessionStorage.getItem('isAdmin') === 'true' ? 'none' : 'block';
+                }
+            }
+        </script>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="home">Event Info</button>
+            <button class="nav-tab" data-tab="register">Register</button>
+            <button class="nav-tab admin-only" data-tab="checkin" style="display: none;">Admin: Check-In</button>
+            <button class="nav-tab" data-tab="brackets">Brackets</button>
+            <button class="nav-tab admin-only" data-tab="manage-brackets" style="display: none;">Admin: Manage Brackets</button>
+            <button class="nav-tab admin-only" data-tab="dashboard" style="display: none;">Admin: Dashboard</button>
+        </div>
+
+        <!-- Home Tab -->
+        <div class="tab-content active" id="home">
+            <div class="event-info">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.1em;">EVENT DETAILS</h2>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Date</div>
+                        <div class="info-value">March 22nd, 2026</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⏰ Time</div>
+                        <div class="info-value">12:00 PM - 6:00 PM</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Location</div>
+                        <div class="info-value">BBoy Factory<br>6401 N. Broadway<br>Denver, CO 80216</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Registration</div>
+                        <div class="info-value">$10 - Participants<br>$5 - Spectators</div>
+                    </div>
+                </div>
+
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--electric-blue); margin: 3rem 0 1rem; letter-spacing: 0.1em;">Age Divisions</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🔥 Division 1</div>
+                        <div class="info-value">Ages 6-8</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔥 Division 2</div>
+                        <div class="info-value">Ages 9-11</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔥 Division 3</div>
+                        <div class="info-value">Ages 12-14</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🔥 Division 4</div>
+                        <div class="info-value">Ages 15-18</div>
+                    </div>
+                </div>
+
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--electric-blue); margin: 3rem 0 1rem; letter-spacing: 0.1em;">Event Features</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">🎤 Open Cyphers</div>
+                        <div class="info-value">Free-style sessions</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎧 DJ Spinning Breakbeats</div>
+                        <div class="info-value">Live music all day</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">👨‍⚖️ Knowledgeable Judges</div>
+                        <div class="info-value">Expert evaluation</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🌟 Community Atmosphere</div>
+                        <div class="info-value">Positive vibes only</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Tab -->
+        <div class="tab-content" id="register">
+            <div class="form-section">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.1em;">Dancer Registration</h2>
+                
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="dancerName">Dancer Name / B-Boy/B-Girl Name</label>
+                        <input type="text" id="dancerName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" min="6" max="18" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ageBracket">Age Bracket (Auto-Selected)</label>
+                        <select id="ageBracket" disabled>
+                            <option value="">Select age first</option>
+                            <option value="6-8">6-8 Years</option>
+                            <option value="9-11">9-11 Years</option>
+                            <option value="12-14">12-14 Years</option>
+                            <option value="15-18">15-18 Years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email (Optional)</label>
+                        <input type="email" id="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participantType">Registration Type</label>
+                        <select id="participantType" required>
+                            <option value="participant">Participant - $10</option>
+                            <option value="spectator">Spectator - $5</option>
+                        </select>
+                    </div>
+
+                    <!-- Admin-only fields -->
+                    <div id="adminRegistrationFields" style="display: none;">
+                        <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid var(--gold); border-radius: 10px; padding: 1.5rem; margin-top: 1rem;">
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em;">👑 Admin Quick Actions</h3>
+                            
+                            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; cursor: pointer; font-size: 1.1rem;">
+                                    <input type="checkbox" id="quickCheckin" style="width: auto; margin-right: 0.8rem; transform: scale(1.5);">
+                                    <span>✅ Check In Immediately</span>
+                                </label>
+                                
+                                <label style="display: flex; align-items: center; cursor: pointer; font-size: 1.1rem;">
+                                    <input type="checkbox" id="quickPaid" style="width: auto; margin-right: 0.8rem; transform: scale(1.5);">
+                                    <span>💰 Mark as Paid</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Register Dancer</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Check-In Tab (Admin Only) -->
+        <div class="tab-content" id="checkin">
+            <div class="form-section">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.1em;">Check-In Dancers</h2>
+                
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button class="btn" style="padding: 0.8rem 1.5rem; font-size: 1.1rem;" onclick="loadData()">
+                            🔄 Refresh Data
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchDancers">Search Dancers</label>
+                        <input type="text" id="searchDancers" placeholder="Search by name..." oninput="updateCheckinList()">
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                        <button class="bracket-btn active" onclick="filterCheckin('all')">All</button>
+                        <button class="bracket-btn" onclick="filterCheckin('checked-in')">Checked In</button>
+                        <button class="bracket-btn" onclick="filterCheckin('not-checked-in')">Not Checked In</button>
+                        <button class="bracket-btn" onclick="filterCheckin('paid')">Paid</button>
+                        <button class="bracket-btn" onclick="filterCheckin('unpaid')">Unpaid</button>
+                    </div>
+                </div>
+
+                <div id="checkinList" class="dancers-list">
+                    <!-- Dancers will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Brackets Tab (Public View) -->
+        <div class="tab-content" id="brackets">
+            <div class="form-section">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em; text-align: center;">Tournament Brackets</h2>
+                
+                <div class="age-bracket-selector" id="publicBracketSelector">
+                    <!-- Bracket buttons will be populated here -->
+                </div>
+
+                <div id="publicBracketDisplay">
+                    <!-- Brackets will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Brackets Tab (Admin Only) -->
+        <div class="tab-content" id="manage-brackets">
+            <div class="form-section">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em; text-align: center;">Manage Tournament Brackets</h2>
+                
+                <div style="text-align: center; margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" id="generateBracketsBtn">Generate All Brackets</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c;" onclick="resetAllBrackets()">
+                        🗑️ Reset ALL Brackets
+                    </button>
+                </div>
+
+                <div class="age-bracket-selector" id="bracketSelector">
+                    <!-- Bracket buttons will be populated here -->
+                </div>
+
+                <!-- Manual Dancer Entry -->
+                <div id="manualEntrySection" style="display: none; background: rgba(255, 215, 0, 0.1); border: 2px solid var(--gold); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em;">✏️ Manually Add/Replace Dancer</h3>
+                    <p style="margin-bottom: 1rem; color: var(--electric-blue);">Use this to add a new dancer to a specific match or replace a competitor who dropped out.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div class="form-group">
+                            <label>Select Age Bracket</label>
+                            <select id="manualBracketSelect" onchange="updateManualRoundSelect()">
+                                <option value="">Choose bracket...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Select Round</label>
+                            <select id="manualRoundSelect" onchange="updateManualMatchSelect()">
+                                <option value="">Choose round...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Select Match</label>
+                            <select id="manualMatchSelect">
+                                <option value="">Choose match...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Position</label>
+                            <select id="manualPosition">
+                                <option value="1">Competitor 1 (Top)</option>
+                                <option value="2">Competitor 2 (Bottom)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>Dancer Name</label>
+                        <input type="text" id="manualDancerName" placeholder="Enter dancer name...">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <button class="btn" onclick="addManualDancer()">✅ Add/Replace Dancer</button>
+                        <button class="btn btn-secondary" onclick="toggleManualEntry()">❌ Cancel</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    <button class="btn btn-secondary" id="toggleManualEntryBtn" style="padding: 0.8rem 1.5rem; font-size: 1rem; display: none;" onclick="toggleManualEntry()">
+                        ✏️ Manually Add/Replace Dancer
+                    </button>
+                </div>
+
+                <div id="bracketDisplay">
+                    <!-- Brackets will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab (Admin Only) -->
+        <div class="tab-content" id="dashboard">
+            <div class="form-section">
+                <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.1em; text-align: center;">Event Dashboard</h2>
+                
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats will be populated here -->
+                </div>
+
+                <!-- Setup Instructions for Admins -->
+                <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid var(--gold); border-radius: 15px; padding: 2rem; margin: 3rem 0;">
+                    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em;">📊 Database Setup Instructions</h3>
+                    <p style="margin-bottom: 1rem; line-height: 1.6;">This site uses SheetDB to connect to Google Sheets as a database.</p>
+                    
+                    <div style="background: rgba(0, 0, 0, 0.4); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                        <p style="font-weight: 700; color: var(--electric-blue); margin-bottom: 1rem;">Setup Steps (5 minutes):</p>
+                        <ol style="line-height: 2; margin-left: 1.5rem;">
+                            <li>Create a Google Sheet with columns: <code style="background: rgba(0, 217, 255, 0.2); padding: 0.2rem 0.5rem; border-radius: 3px;">id, name, age, ageBracket, email, type, checkedIn, paid, registrationTime</code></li>
+                            <li>Go to <a href="https://sheetdb.io/" target="_blank" style="color: var(--gold); text-decoration: underline;">SheetDB.io</a> (FREE account)</li>
+                            <li>Click "Create API" and paste your Google Sheet link</li>
+                            <li>Copy your SheetDB API URL</li>
+                            <li>Edit the HTML file - replace <code style="background: rgba(0, 217, 255, 0.2); padding: 0.2rem 0.5rem; border-radius: 3px;">SHEETDB_API_URL</code></li>
+                            <li>Set <code style="background: rgba(0, 217, 255, 0.2); padding: 0.2rem 0.5rem; border-radius: 3px;">ADMIN_PASSWORD</code> to your desired password</li>
+                        </ol>
+                        <p style="margin-top: 1rem; font-style: italic; color: var(--neon-green);">✨ FREE plan: 1000 API calls/month</p>
+                        <p style="margin-top: 0.5rem; font-style: italic; color: var(--electric-blue);">💡 All data stored in your own Google Sheet!</p>
+                    </div>
+                </div>
+
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--electric-blue); margin: 3rem 0 1rem; letter-spacing: 0.1em; text-align: center;">All Registered Dancers</h3>
+                <div id="allDancersList" class="dancers-list">
+                    <!-- All dancers will be listed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================================
+        // CONFIGURATION - EDIT THESE VALUES
+        // ====================================
+        const SHEETDB_API_URL = "https://sheetdb.io/api/v1/9g0rijmyv6e77";
+        const BRACKETS_SHEET_URL = "https://sheetdb.io/api/v1/9g0rijmyv6e77?sheet=brackets"; // Add a second sheet called "brackets"
+        const ADMIN_PASSWORD = "futurefresh2026"; // Change this password!
+
+        // Admin state
+        let isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+        let checkinFilter = 'all';
+
+        // Data
+        let dancers = [];
+        let brackets = {};
+
+        // Show sync status
+        function showSyncStatus(message, isError = false) {
+            const status = document.getElementById('syncStatus');
+            status.textContent = message;
+            status.classList.toggle('error', isError);
+            status.classList.add('show');
+            setTimeout(() => status.classList.remove('show'), 3000);
+        }
+
+        // Initialize UI based on admin status
+        function updateUIForAdminStatus() {
+            const adminTabs = document.querySelectorAll('.nav-tab.admin-only');
+            const adminBadge = document.getElementById('adminBadge');
+            const adminRegFields = document.getElementById('adminRegistrationFields');
+            
+            if (isAdmin) {
+                adminTabs.forEach(tab => tab.style.display = 'block');
+                adminBadge.classList.add('show');
+                if (adminRegFields) adminRegFields.style.display = 'block';
+            } else {
+                adminTabs.forEach(tab => tab.style.display = 'none');
+                adminBadge.classList.remove('show');
+                if (adminRegFields) adminRegFields.style.display = 'none';
+            }
+        }
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                sessionStorage.setItem('isAdmin', 'true');
+                updateUIForAdminStatus();
+                updateLoginButton();
+                closeLoginModal();
+                showSyncStatus('✅ Admin login successful!');
+            } else {
+                alert('❌ Incorrect password');
+                document.getElementById('adminPassword').value = '';
+            }
+        });
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('show');
+        }
+
+        function logout() {
+            isAdmin = false;
+            sessionStorage.removeItem('isAdmin');
+            updateUIForAdminStatus();
+            updateLoginButton();
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="home"]').classList.add('active');
+            document.getElementById('home').classList.add('active');
+            showSyncStatus('Logged out');
+        }
+
+        // Load data from Google Sheets
+        async function loadData() {
+            try {
+                showSyncStatus('☁️ Loading data...');
+                const response = await fetch(SHEETDB_API_URL);
+                
+                if (!response.ok) throw new Error('Failed to load data');
+                
+                const data = await response.json();
+                console.log('Raw data from Google Sheets:', data);
+                
+                dancers = data.map(d => {
+                    // Helper function to convert various boolean formats
+                    const toBool = (val) => {
+                        if (val === true || val === 'true' || val === 'TRUE' || val === 'True' || val === 1 || val === '1') return true;
+                        return false;
+                    };
+                    
+                    return {
+                        id: d.id,
+                        name: d.name,
+                        age: parseInt(d.age),
+                        ageBracket: d.ageBracket,
+                        email: d.email || '',
+                        type: d.type,
+                        checkedIn: toBool(d.checkedIn),
+                        paid: toBool(d.paid),
+                        registrationTime: d.registrationTime
+                    };
+                });
+                
+                console.log('Processed dancers:', dancers);
+                
+                // Load brackets from Google Sheets (second sheet)
+                try {
+                    const bracketsResponse = await fetch(BRACKETS_SHEET_URL);
+                    if (bracketsResponse.ok) {
+                        const bracketsData = await bracketsResponse.json();
+                        console.log('Raw brackets from Google Sheets:', bracketsData);
+                        
+                        if (bracketsData && bracketsData.length > 0 && bracketsData[0].data) {
+                            brackets = JSON.parse(bracketsData[0].data);
+                            console.log('Loaded brackets from Google Sheets:', brackets);
+                        } else {
+                            brackets = {};
+                            console.log('No brackets found in Google Sheets');
+                        }
+                    } else {
+                        console.log('Brackets sheet not found, using empty brackets');
+                        brackets = {};
+                    }
+                } catch (bracketError) {
+                    console.log('Could not load brackets from Google Sheets:', bracketError);
+                    brackets = {};
+                }
+                
+                updateAllViews();
+                console.log('All views updated');
+                showSyncStatus('✅ Data loaded!');
+            } catch (error) {
+                console.error('Load error:', error);
+                showSyncStatus('❌ Failed to load data', true);
+            }
+        }
+
+        function updateAllViews() {
+            updateCheckinList();
+            if (isAdmin) {
+                updateDashboard();
+                displayBracketSelector(); // Admin bracket view
+            }
+            displayPublicBracketSelector(); // Always update public bracket view
+        }
+
+        // Save brackets to Google Sheets
+        async function saveBrackets() {
+            try {
+                showSyncStatus('☁️ Saving brackets...');
+                console.log('Saving brackets to Google Sheets:', brackets);
+                
+                // Delete existing bracket data
+                await fetch(BRACKETS_SHEET_URL, {
+                    method: 'DELETE'
+                });
+                
+                // Save new bracket data as a single JSON string
+                const response = await fetch(BRACKETS_SHEET_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id: 'brackets',
+                        data: JSON.stringify(brackets),
+                        updated: new Date().toISOString()
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Failed to save brackets');
+                
+                console.log('Brackets saved to Google Sheets successfully');
+                showSyncStatus('✅ Brackets saved!');
+            } catch (error) {
+                console.error('Error saving brackets:', error);
+                showSyncStatus('❌ Failed to save brackets', true);
+            }
+        }
+
+        // Auto-refresh data every 10 seconds
+        setInterval(loadData, 10000);
+
+        // Tab Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.tab;
+                
+                if (tab.classList.contains('admin-only') && !isAdmin) {
+                    document.getElementById('loginModal').classList.add('show');
+                    return;
+                }
+                
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                if (targetTab === 'checkin') updateCheckinList();
+                if (targetTab === 'dashboard') updateDashboard();
+                if (targetTab === 'manage-brackets') displayBracketSelector();
+                if (targetTab === 'brackets') displayPublicBracketSelector();
+            });
+        });
+
+        // Auto-select age bracket
+        document.getElementById('age').addEventListener('input', (e) => {
+            const age = parseInt(e.target.value);
+            const bracketSelect = document.getElementById('ageBracket');
+            
+            if (age >= 6 && age <= 8) bracketSelect.value = '6-8';
+            else if (age >= 9 && age <= 11) bracketSelect.value = '9-11';
+            else if (age >= 12 && age <= 14) bracketSelect.value = '12-14';
+            else if (age >= 15 && age <= 18) bracketSelect.value = '15-18';
+            else bracketSelect.value = '';
+        });
+
+        // Registration Form
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const dancer = {
+                id: Date.now().toString(),
+                name: document.getElementById('dancerName').value,
+                age: parseInt(document.getElementById('age').value),
+                ageBracket: document.getElementById('ageBracket').value,
+                email: document.getElementById('email').value,
+                type: document.getElementById('participantType').value,
+                checkedIn: isAdmin && document.getElementById('quickCheckin')?.checked || false,
+                paid: isAdmin && document.getElementById('quickPaid')?.checked || false,
+                registrationTime: new Date().toISOString()
+            };
+            
+            try {
+                showSyncStatus('☁️ Registering...');
+                const response = await fetch(SHEETDB_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dancer)
+                });
+                
+                if (!response.ok) throw new Error('Registration failed');
+                
+                showSyncStatus('✅ Registration successful!');
+                let message = `✅ ${dancer.name} registered successfully in the ${dancer.ageBracket} age bracket!`;
+                if (dancer.checkedIn) message += '\n✅ Checked in!';
+                if (dancer.paid) message += '\n💰 Marked as paid!';
+                alert(message);
+                e.target.reset();
+                await loadData();
+            } catch (error) {
+                console.error('Registration error:', error);
+                showSyncStatus('❌ Registration failed', true);
+                alert('Registration failed. Please try again.');
+            }
+        });
+
+        // Check-in List
+        function updateCheckinList() {
+            const checkinList = document.getElementById('checkinList');
+            let participants = dancers.filter(d => d.type === 'participant');
+            
+            const searchTerm = document.getElementById('searchDancers')?.value.toLowerCase() || '';
+            if (searchTerm) {
+                participants = participants.filter(d => 
+                    d.name.toLowerCase().includes(searchTerm) ||
+                    (d.email && d.email.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            if (checkinFilter === 'checked-in') {
+                participants = participants.filter(d => d.checkedIn);
+            } else if (checkinFilter === 'not-checked-in') {
+                participants = participants.filter(d => !d.checkedIn);
+            } else if (checkinFilter === 'paid') {
+                participants = participants.filter(d => d.paid);
+            } else if (checkinFilter === 'unpaid') {
+                participants = participants.filter(d => !d.paid);
+            }
+            
+            if (participants.length === 0) {
+                checkinList.innerHTML = '<p style="text-align: center; color: var(--electric-blue); font-size: 1.2rem;">No dancers match your filters.</p>';
+                return;
+            }
+            
+            checkinList.innerHTML = participants.map(dancer => `
+                <div class="dancer-card">
+                    <div class="dancer-name">${dancer.name}</div>
+                    <div class="dancer-info">Age: ${dancer.age}</div>
+                    <div class="dancer-info">Bracket: ${dancer.ageBracket}</div>
+                    <div class="dancer-info">Email: ${dancer.email || 'N/A'}</div>
+                    <div class="dancer-info">Type: ${dancer.type === 'participant' ? 'Participant ($10)' : 'Spectator ($5)'}</div>
+                    <div style="margin-top: 0.8rem;">
+                        <span class="${dancer.checkedIn ? 'checked-in' : 'not-checked-in'}">
+                            ${dancer.checkedIn ? '✓ Checked In' : 'Not Checked In'}
+                        </span>
+                        <span class="${dancer.paid ? 'checked-in' : 'not-checked-in'}" style="margin-left: 0.5rem;">
+                            ${dancer.paid ? '💰 Paid' : '💳 Unpaid'}
+                        </span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+                        ${!dancer.checkedIn ? `
+                            <button class="btn btn-secondary" style="padding: 0.8rem; font-size: 1rem;" onclick="checkInDancer('${dancer.id}')">
+                                Check In
+                            </button>
+                        ` : `
+                            <button class="btn" style="padding: 0.8rem; font-size: 1rem; background: linear-gradient(135deg, #666, #999);" onclick="uncheckInDancer('${dancer.id}')">
+                                Undo Check-In
+                            </button>
+                        `}
+                        ${!dancer.paid ? `
+                            <button class="btn" style="padding: 0.8rem; font-size: 1rem; background: linear-gradient(135deg, var(--neon-green), #2ecc71);" onclick="markAsPaid('${dancer.id}')">
+                                Mark Paid
+                            </button>
+                        ` : `
+                            <button class="btn" style="padding: 0.8rem; font-size: 1rem; background: linear-gradient(135deg, #666, #999);" onclick="markAsUnpaid('${dancer.id}')">
+                                Mark Unpaid
+                            </button>
+                        `}
+                    </div>
+                    <button class="btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem; font-size: 1rem; background: linear-gradient(135deg, #e74c3c, #c0392b); border-color: #e74c3c;" onclick="deleteDancer('${dancer.id}', '${dancer.name}')">
+                        🗑️ Delete Registration
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterCheckin(filter) {
+            checkinFilter = filter;
+            const buttons = document.querySelectorAll('#checkin .bracket-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updateCheckinList();
+        }
+
+        async function checkInDancer(id) {
+            if (!isAdmin) return alert('Admin access required');
+            await updateDancer(id, { checkedIn: true });
+            showSyncStatus('✅ Dancer checked in!');
+        }
+
+        async function uncheckInDancer(id) {
+            if (!isAdmin) return alert('Admin access required');
+            await updateDancer(id, { checkedIn: false });
+            showSyncStatus('✅ Check-in removed!');
+        }
+
+        async function markAsPaid(id) {
+            if (!isAdmin) return alert('Admin access required');
+            await updateDancer(id, { paid: true });
+            showSyncStatus('💰 Marked as paid!');
+        }
+
+        async function markAsUnpaid(id) {
+            if (!isAdmin) return alert('Admin access required');
+            await updateDancer(id, { paid: false });
+            showSyncStatus('💳 Marked as unpaid!');
+        }
+
+        async function updateDancer(id, updates) {
+            try {
+                showSyncStatus('☁️ Updating...');
+                console.log('Update requested - ID:', id, 'Updates:', updates);
+                
+                // Find the dancer in our local data
+                const dancer = dancers.find(d => d.id === id);
+                if (!dancer) {
+                    throw new Error('Dancer not found');
+                }
+                
+                console.log('Original dancer data:', dancer);
+                
+                // Create updated dancer object - preserve ALL fields
+                const updatedDancer = {
+                    id: dancer.id,
+                    name: dancer.name,
+                    age: dancer.age,
+                    ageBracket: dancer.ageBracket,
+                    email: dancer.email || '',
+                    type: dancer.type,
+                    checkedIn: dancer.checkedIn,
+                    paid: dancer.paid,
+                    registrationTime: dancer.registrationTime,
+                    // Apply updates
+                    ...updates
+                };
+                
+                console.log('Updated dancer data:', updatedDancer);
+                
+                // Delete the old row
+                const deleteResponse = await fetch(`${SHEETDB_API_URL}/id/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!deleteResponse.ok) {
+                    console.error('Delete failed:', await deleteResponse.text());
+                    throw new Error('Delete failed');
+                }
+                
+                console.log('Deleted old row');
+                
+                // Add the updated row
+                const addResponse = await fetch(SHEETDB_API_URL, {
+                    method: 'POST',
+                    headers: { 
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify(updatedDancer)
+                });
+                
+                if (!addResponse.ok) {
+                    console.error('Add failed:', await addResponse.text());
+                    throw new Error('Add failed');
+                }
+                
+                console.log('Added updated row');
+                
+                // Wait a moment for Google Sheets to process, then reload
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Increased to 1 second
+                console.log('Reloading data...');
+                await loadData();
+                showSyncStatus('✅ Updated successfully!');
+            } catch (error) {
+                console.error('Update error:', error);
+                showSyncStatus('❌ Update failed', true);
+                alert('Update failed. Please try again or check your internet connection.');
+            }
+        }
+
+        async function deleteDancer(id, name) {
+            if (!isAdmin) return alert('Admin access required');
+            
+            if (!confirm(`⚠️ Are you sure you want to delete ${name}?\n\nThis action cannot be undone!`)) return;
+            
+            try {
+                const response = await fetch(`${SHEETDB_API_URL}/id/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) throw new Error('Delete failed');
+                showSyncStatus('🗑️ Registration deleted!');
+                await loadData();
+            } catch (error) {
+                console.error('Delete error:', error);
+                showSyncStatus('❌ Failed to delete', true);
+            }
+        }
+
+        // Bracket Generation
+        document.getElementById('generateBracketsBtn').addEventListener('click', generateBrackets);
+
+        async function generateBrackets() {
+            if (!isAdmin) return alert('Admin access required');
+
+            const checkedInDancers = dancers.filter(d => d.checkedIn && d.type === 'participant');
+            
+            if (checkedInDancers.length === 0) {
+                return alert('⚠️ No dancers have checked in yet!');
+            }
+            
+            brackets = {};
+            const ageBrackets = ['6-8', '9-11', '12-14', '15-18'];
+            
+            ageBrackets.forEach(bracket => {
+                const bracketDancers = checkedInDancers.filter(d => d.ageBracket === bracket);
+                if (bracketDancers.length > 0) {
+                    const shuffled = bracketDancers.sort(() => Math.random() - 0.5);
+                    brackets[bracket] = createBracket(shuffled);
+                }
+            });
+            
+            await saveBrackets();
+            displayBracketSelector();
+            displayPublicBracketSelector();
+            alert('🔥 All brackets generated successfully!');
+        }
+
+        function regenerateBracket(ageBracket) {
+            if (!isAdmin) return alert('Admin access required');
+            
+            const confirmed = confirm(`🔄 Regenerate ${ageBracket} bracket?\n\nThis will:\n- Delete current bracket and all match results\n- Create a new randomized bracket with the same dancers\n\nContinue?`);
+            
+            if (!confirmed) return;
+            
+            const checkedInDancers = dancers.filter(d => d.checkedIn && d.type === 'participant' && d.ageBracket === ageBracket);
+            
+            if (checkedInDancers.length === 0) {
+                alert(`⚠️ No checked-in dancers found in ${ageBracket} bracket!`);
+                return;
+            }
+            
+            const shuffled = checkedInDancers.sort(() => Math.random() - 0.5);
+            brackets[ageBracket] = createBracket(shuffled);
+            
+            saveBrackets();
+            displayBracketSelector();
+            displayPublicBracketSelector();
+            showSyncStatus(`🔄 ${ageBracket} bracket regenerated!`);
+        }
+
+        function resetSingleBracket(ageBracket) {
+            if (!isAdmin) return alert('Admin access required');
+            
+            const confirmed = confirm(`⚠️ Reset ${ageBracket} bracket?\n\nThis will permanently delete:\n- The ${ageBracket} bracket\n- All match results\n- All winner selections\n\nThis action cannot be undone!\n\nContinue?`);
+            
+            if (!confirmed) return;
+            
+            delete brackets[ageBracket];
+            saveBrackets();
+            displayBracketSelector();
+            displayPublicBracketSelector();
+            showSyncStatus(`🗑️ ${ageBracket} bracket reset!`);
+            alert(`✅ ${ageBracket} bracket has been reset.`);
+        }
+
+        function toggleManualEntry() {
+            const section = document.getElementById('manualEntrySection');
+            const btn = document.getElementById('toggleManualEntryBtn');
+            
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+                btn.style.display = 'none';
+                populateManualBracketSelect();
+            } else {
+                section.style.display = 'none';
+                btn.style.display = 'inline-block';
+                // Clear form
+                document.getElementById('manualDancerName').value = '';
+            }
+        }
+
+        function populateManualBracketSelect() {
+            const select = document.getElementById('manualBracketSelect');
+            const availableBrackets = Object.keys(brackets);
+            
+            select.innerHTML = '<option value="">Choose bracket...</option>' +
+                availableBrackets.map(b => `<option value="${b}">${b} Years</option>`).join('');
+        }
+
+        function updateManualRoundSelect() {
+            const bracketSelect = document.getElementById('manualBracketSelect');
+            const roundSelect = document.getElementById('manualRoundSelect');
+            const ageBracket = bracketSelect.value;
+            
+            if (!ageBracket) {
+                roundSelect.innerHTML = '<option value="">Choose round...</option>';
+                return;
+            }
+            
+            const bracketData = brackets[ageBracket];
+            const totalRounds = bracketData.length;
+            
+            roundSelect.innerHTML = '<option value="">Choose round...</option>' +
+                bracketData.map((round, idx) => 
+                    `<option value="${idx}">${getRoundName(idx, totalRounds)}</option>`
+                ).join('');
+        }
+
+        function updateManualMatchSelect() {
+            const bracketSelect = document.getElementById('manualBracketSelect');
+            const roundSelect = document.getElementById('manualRoundSelect');
+            const matchSelect = document.getElementById('manualMatchSelect');
+            
+            const ageBracket = bracketSelect.value;
+            const roundIndex = roundSelect.value;
+            
+            if (!ageBracket || roundIndex === '') {
+                matchSelect.innerHTML = '<option value="">Choose match...</option>';
+                return;
+            }
+            
+            const round = brackets[ageBracket][parseInt(roundIndex)];
+            
+            matchSelect.innerHTML = '<option value="">Choose match...</option>' +
+                round.map((match, idx) => {
+                    const comp1 = match.competitor1?.name || 'Empty';
+                    const comp2 = match.competitor2?.name || 'Empty';
+                    return `<option value="${idx}">Battle ${idx + 1}: ${comp1} vs ${comp2}</option>`;
+                }).join('');
+        }
+
+        function addManualDancer() {
+            if (!isAdmin) return alert('Admin access required');
+            
+            const ageBracket = document.getElementById('manualBracketSelect').value;
+            const roundIndex = parseInt(document.getElementById('manualRoundSelect').value);
+            const matchIndex = parseInt(document.getElementById('manualMatchSelect').value);
+            const position = parseInt(document.getElementById('manualPosition').value);
+            const dancerName = document.getElementById('manualDancerName').value.trim();
+            
+            if (!ageBracket || isNaN(roundIndex) || isNaN(matchIndex) || !dancerName) {
+                return alert('⚠️ Please fill in all fields!');
+            }
+            
+            const match = brackets[ageBracket][roundIndex][matchIndex];
+            
+            // Create manual dancer object
+            const manualDancer = {
+                id: `manual-${Date.now()}`,
+                name: dancerName,
+                position: 999 // Special marker for manual entries
+            };
+            
+            // Add to the specified position
+            if (position === 1) {
+                match.competitor1 = manualDancer;
+            } else {
+                match.competitor2 = manualDancer;
+            }
+            
+            // Clear winner if exists (match needs to be re-fought)
+            match.winner = null;
+            
+            // Save
+            saveBrackets();
+            
+            // Update display
+            displayBracket(ageBracket, true);
+            displayPublicBracketSelector();
+            
+            showSyncStatus(`✅ ${dancerName} added to bracket!`);
+            alert(`✅ ${dancerName} has been added to the bracket!\n\nBattle ${matchIndex + 1}, Position ${position === 1 ? 'Top' : 'Bottom'}`);
+            
+            // Reset form
+            toggleManualEntry();
+        }
+            if (!isAdmin) return alert('Admin access required');
+            
+            const confirmed = confirm('⚠️ RESET ALL BRACKETS?\n\nThis will delete:\n- ALL age brackets (6-8, 9-11, 12-14, 15-18)\n- ALL match results\n- ALL winner selections\n\nThis action cannot be undone!');
+            
+            if (!confirmed) return;
+            
+            // Double confirmation for safety
+            const doubleConfirm = confirm('🚨 FINAL WARNING 🚨\n\nYou are about to permanently delete ALL tournament data.\n\nAre you ABSOLUTELY SURE?');
+            
+            if (!doubleConfirm) return;
+            
+            brackets = {};
+            saveBrackets();
+            displayBracketSelector();
+            displayPublicBracketSelector();
+            showSyncStatus('🗑️ All brackets reset!');
+            alert('✅ All brackets have been reset. You can now generate new brackets.');
+        }
+
+        function createBracket(dancers) {
+            const rounds = [];
+            let currentRound = dancers.map((dancer, index) => ({
+                id: dancer.id,
+                name: dancer.name,
+                position: index
+            }));
+            
+            console.log(`Creating bracket for ${dancers.length} dancers`);
+            
+            // Create initial round matchups
+            const initialMatchups = [];
+            for (let i = 0; i < currentRound.length; i += 2) {
+                if (i + 1 < currentRound.length) {
+                    initialMatchups.push({
+                        id: `match-${i}`,
+                        competitor1: currentRound[i],
+                        competitor2: currentRound[i + 1],
+                        winner: null
+                    });
+                } else {
+                    // Bye - dancer automatically advances
+                    initialMatchups.push({
+                        id: `match-${i}`,
+                        competitor1: currentRound[i],
+                        competitor2: null,
+                        winner: currentRound[i]
+                    });
+                }
+            }
+            
+            rounds.push(initialMatchups);
+            console.log(`Round 1: ${initialMatchups.length} matches`);
+            
+            // Create subsequent rounds with proper empty match structure
+            let numMatches = Math.ceil(currentRound.length / 2);
+            let roundNum = 2;
+            
+            while (numMatches > 1) {
+                const nextRoundMatches = [];
+                const nextRoundSize = Math.ceil(numMatches / 2);
+                
+                for (let i = 0; i < nextRoundSize; i++) {
+                    nextRoundMatches.push({
+                        id: `match-${i}`,
+                        competitor1: null,
+                        competitor2: null,
+                        winner: null
+                    });
+                }
+                
+                rounds.push(nextRoundMatches);
+                console.log(`Round ${roundNum}: ${nextRoundMatches.length} matches`);
+                
+                numMatches = nextRoundSize;
+                roundNum++;
+            }
+            
+            console.log(`Total rounds created: ${rounds.length}`);
+            return rounds;
+        }
+
+        // Helper function to get round name based on number of rounds total and current round
+        function getRoundName(roundIndex, totalRounds) {
+            const roundsFromEnd = totalRounds - roundIndex - 1;
+            
+            // Name rounds from the end backwards
+            if (roundsFromEnd === 0) return 'Finals';
+            if (roundsFromEnd === 1) return 'Semi Finals';
+            if (roundsFromEnd === 2) return 'Quarter Finals';
+            if (roundsFromEnd === 3) return 'Round of 16';
+            if (roundsFromEnd === 4) return 'Round of 32';
+            if (roundsFromEnd === 5) return 'Round of 64';
+            
+            // For earlier rounds, just use round number
+            return `Round ${roundIndex + 1}`;
+        }
+
+        function displayBracketSelector() {
+            const selector = document.getElementById('bracketSelector');
+            const availableBrackets = Object.keys(brackets);
+            const manualEntryBtn = document.getElementById('toggleManualEntryBtn');
+            
+            if (availableBrackets.length === 0) {
+                selector.innerHTML = '<p style="text-align: center; color: var(--electric-blue); font-size: 1.2rem;">Generate brackets first!</p>';
+                document.getElementById('bracketDisplay').innerHTML = '';
+                if (manualEntryBtn) manualEntryBtn.style.display = 'none';
+                return;
+            }
+            
+            // Show manual entry button when brackets exist
+            if (manualEntryBtn) manualEntryBtn.style.display = 'inline-block';
+            
+            selector.innerHTML = `
+                <div style="width: 100%;">
+                    ${availableBrackets.map(bracket => `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                            <button class="bracket-btn" onclick="displayBracket('${bracket}', true)">${bracket} Years</button>
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="regenerateBracket('${bracket}')">
+                                🔄 Regenerate
+                            </button>
+                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: linear-gradient(135deg, #e67e22, #d35400); border-color: #e67e22;" onclick="resetSingleBracket('${bracket}')">
+                                🗑️ Reset
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            displayBracket(availableBrackets[0], true);
+        }
+
+        function displayPublicBracketSelector() {
+            const selector = document.getElementById('publicBracketSelector');
+            const availableBrackets = Object.keys(brackets);
+            
+            if (availableBrackets.length === 0) {
+                selector.innerHTML = '<p style="text-align: center; color: var(--electric-blue); font-size: 1.2rem;">Brackets will appear here once generated!</p>';
+                document.getElementById('publicBracketDisplay').innerHTML = '';
+                return;
+            }
+            
+            selector.innerHTML = availableBrackets.map(bracket => `
+                <button class="bracket-btn" onclick="displayBracket('${bracket}', false)">${bracket} Years</button>
+            `).join('');
+            
+            displayBracket(availableBrackets[0], false);
+        }
+
+        function displayBracket(ageBracket, canEdit) {
+            const displayId = canEdit ? 'bracketDisplay' : 'publicBracketDisplay';
+            const selectorId = canEdit ? 'bracketSelector' : 'publicBracketSelector';
+            
+            document.querySelectorAll(`#${selectorId} .bracket-btn`).forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(ageBracket)) btn.classList.add('active');
+            });
+            
+            const bracketData = brackets[ageBracket];
+            const display = document.getElementById(displayId);
+            
+            if (!bracketData || bracketData.length === 0) {
+                display.innerHTML = '<p style="text-align: center; color: var(--electric-blue); font-size: 1.2rem;">No bracket data available.</p>';
+                return;
+            }
+            
+            const finalRound = bracketData[bracketData.length - 1];
+            const champion = finalRound.length > 0 && finalRound[0].winner ? finalRound[0].winner : null;
+            
+            let html = '';
+            
+            if (champion) {
+                html += `
+                    <div class="champion-banner">
+                        <h2>🏆 CHAMPION 🏆</h2>
+                        <p>${champion.name}</p>
+                    </div>
+                `;
+            }
+            
+            const totalRounds = bracketData.length;
+            
+            bracketData.forEach((round, roundIndex) => {
+                if (round.length === 0) return;
+                
+                const roundName = getRoundName(roundIndex, totalRounds);
+                
+                html += `
+                    <div class="bracket-container">
+                        <h3 class="round-title">${roundName} (${round.length} ${round.length === 1 ? 'Battle' : 'Battles'})</h3>
+                        <div class="matchups">
+                            ${round.map((match, matchIndex) => {
+                                if (!match.competitor1) return '';
+                                
+                                return `
+                                    <div class="matchup">
+                                        <div class="matchup-header">Battle ${matchIndex + 1}</div>
+                                        <div class="competitor ${match.winner && match.winner.id === match.competitor1.id ? 'winner' : ''}">
+                                            <span>${match.competitor1.name}</span>
+                                            ${canEdit && !match.winner && match.competitor2 ? `
+                                                <button class="select-winner" onclick="selectWinner('${ageBracket}', ${roundIndex}, ${matchIndex}, 1)">
+                                                    Select Winner
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                        ${match.competitor2 ? `
+                                            <div class="competitor ${match.winner && match.winner.id === match.competitor2.id ? 'winner' : ''}">
+                                                <span>${match.competitor2.name}</span>
+                                                ${canEdit && !match.winner ? `
+                                                    <button class="select-winner" onclick="selectWinner('${ageBracket}', ${roundIndex}, ${matchIndex}, 2)">
+                                                        Select Winner
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        ` : '<div style="text-align: center; color: var(--gold); font-style: italic;">Bye - Auto Advance</div>'}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            display.innerHTML = html;
+        }
+
+        function selectWinner(ageBracket, roundIndex, matchIndex, competitorNum) {
+            if (!isAdmin) return alert('Admin access required');
+
+            const match = brackets[ageBracket][roundIndex][matchIndex];
+            const winner = competitorNum === 1 ? match.competitor1 : match.competitor2;
+            
+            console.log('Selecting winner:', winner, 'from match:', match);
+            
+            // Mark the winner in current match
+            match.winner = winner;
+            
+            // Advance to next round
+            const nextRoundIndex = roundIndex + 1;
+            if (nextRoundIndex < brackets[ageBracket].length) {
+                const nextMatchIndex = Math.floor(matchIndex / 2);
+                const nextMatch = brackets[ageBracket][nextRoundIndex][nextMatchIndex];
+                
+                console.log('Advancing to round', nextRoundIndex, 'match', nextMatchIndex);
+                
+                // Determine which slot in the next match (competitor1 or competitor2)
+                if (matchIndex % 2 === 0) {
+                    nextMatch.competitor1 = winner;
+                    console.log('Set as competitor1');
+                } else {
+                    nextMatch.competitor2 = winner;
+                    console.log('Set as competitor2');
+                }
+                
+                // If both competitors are now set, check for auto-advance (shouldn't happen normally)
+                if (nextMatch.competitor1 && !nextMatch.competitor2) {
+                    nextMatch.winner = nextMatch.competitor1;
+                    console.log('Auto-advancing competitor1 (bye)');
+                } else if (!nextMatch.competitor1 && nextMatch.competitor2) {
+                    nextMatch.winner = nextMatch.competitor2;
+                    console.log('Auto-advancing competitor2 (bye)');
+                }
+            }
+            
+            // Save to Google Sheets
+            saveBrackets();
+            
+            // Refresh both admin and public displays
+            displayBracket(ageBracket, true);
+            displayPublicBracketSelector();
+            
+            console.log('Updated bracket:', brackets[ageBracket]);
+        }
+
+        // Dashboard
+        function updateDashboard() {
+            const totalDancers = dancers.filter(d => d.type === 'participant').length;
+            const checkedIn = dancers.filter(d => d.checkedIn && d.type === 'participant').length;
+            const spectators = dancers.filter(d => d.type === 'spectator').length;
+            const totalPaid = dancers.filter(d => d.paid).length;
+            const totalUnpaid = dancers.length - totalPaid;
+            
+            const participantsPaid = dancers.filter(d => d.type === 'participant' && d.paid).length;
+            const spectatorsPaid = dancers.filter(d => d.type === 'spectator' && d.paid).length;
+            const revenue = (participantsPaid * 10) + (spectatorsPaid * 5);
+            
+            const bracketCounts = {
+                '6-8': dancers.filter(d => d.ageBracket === '6-8' && d.type === 'participant').length,
+                '9-11': dancers.filter(d => d.ageBracket === '9-11' && d.type === 'participant').length,
+                '12-14': dancers.filter(d => d.ageBracket === '12-14' && d.type === 'participant').length,
+                '15-18': dancers.filter(d => d.ageBracket === '15-18' && d.type === 'participant').length
+            };
+            
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalDancers}</div>
+                    <div class="stat-label">Total Dancers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${checkedIn}</div>
+                    <div class="stat-label">Checked In</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${spectators}</div>
+                    <div class="stat-label">Spectators</div>
+                </div>
+                <div class="stat-card" style="border-color: var(--neon-green);">
+                    <div class="stat-number">${totalPaid}</div>
+                    <div class="stat-label">Paid</div>
+                </div>
+                <div class="stat-card" style="border-color: var(--flame-orange);">
+                    <div class="stat-number">${totalUnpaid}</div>
+                    <div class="stat-label">Unpaid</div>
+                </div>
+                <div class="stat-card" style="border-color: var(--gold);">
+                    <div class="stat-number">$${revenue}</div>
+                    <div class="stat-label">Revenue Collected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${bracketCounts['6-8']}</div>
+                    <div class="stat-label">Ages 6-8</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${bracketCounts['9-11']}</div>
+                    <div class="stat-label">Ages 9-11</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${bracketCounts['12-14']}</div>
+                    <div class="stat-label">Ages 12-14</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${bracketCounts['15-18']}</div>
+                    <div class="stat-label">Ages 15-18</div>
+                </div>
+            `;
+            
+            const allDancers = dancers.filter(d => d.type === 'participant');
+            document.getElementById('allDancersList').innerHTML = allDancers.length > 0 ? allDancers.map(dancer => `
+                <div class="dancer-card">
+                    <div class="dancer-name">${dancer.name}</div>
+                    <div class="dancer-info">Age: ${dancer.age}</div>
+                    <div class="dancer-info">Bracket: ${dancer.ageBracket}</div>
+                    <div style="margin-top: 0.5rem;">
+                        <span class="${dancer.checkedIn ? 'checked-in' : 'not-checked-in'}">
+                            ${dancer.checkedIn ? '✓ Checked In' : 'Not Checked In'}
+                        </span>
+                        <span class="${dancer.paid ? 'checked-in' : 'not-checked-in'}" style="margin-left: 0.5rem;">
+                            ${dancer.paid ? '💰 Paid' : '💳 Unpaid'}
+                        </span>
+                    </div>
+                </div>
+            `).join('') : '<p style="text-align: center; color: var(--electric-blue); font-size: 1.2rem;">No dancers registered yet.</p>';
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            updateUIForAdminStatus();
+            updateLoginButton();
+            loadData();
+        });
+    </script>
+</body>
+</html>
